@@ -1,0 +1,9 @@
+
+npm init --yes          desde la consola para crear el package.json
+npm i express express-handlebars express-session mysql express-mysql-session morgan bcryptjs passport passport-local timeago.js connect-flash express-validator
+npm i nodemon -D
+
+"dev": "nodemon src/"      se agrega esta linea en package.json para que pueda correr el comando de nodemon, (corre el archivo index.js que este en /src)
+npm run dev                         para correr el servidor y ahora se puede entrar a http://localhost:4000/
+
+voy en min 31
