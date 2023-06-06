@@ -1,7 +1,16 @@
 const express = require('express');
 const morgan = require('morgan');
-const {engine} = require('express-handlebars');
 const path = require('path');
+const { engine } = require('express-handlebars');
+const flash = require('connect-flash');
+
+const session = require('express-session');
+const validator = require('express-validator');
+const passport = require('passport');
+const MySQLStore = require('express-mysql-session')(session);
+const bodyParser = require('body-parser');
+
+const { database } = require('./keys');
 
 //inictializations
 const app = express();
@@ -19,12 +28,21 @@ app.engine('.hbs', engine({
 app.set('view engine', '.hbs');
 
 // Middlewares
+app.use(session({
+    secret: 'faztmysqlnodemysql',
+    resave: false,
+    saveUninitialized: false,
+    store: new MySQLStore(database)
+  }));
+debugger
+app.use(flash());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Global Variables
 app.use((req, res, next) => {
+    app.locals.success = req.flash('success');
     next();
 })
 
