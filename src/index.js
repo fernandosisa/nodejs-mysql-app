@@ -3,7 +3,6 @@ const morgan = require('morgan');
 const path = require('path');
 const { engine } = require('express-handlebars');
 const flash = require('connect-flash');
-
 const session = require('express-session');
 const validator = require('express-validator');
 const passport = require('passport');
@@ -14,6 +13,7 @@ const { database } = require('./keys');
 
 //inictializations
 const app = express();
+require('./lib/passport');
 
 //settings
 app.set('port', process.env.PORT || 4000);
@@ -33,16 +33,19 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: new MySQLStore(database)
-  }));
-debugger
+}));
 app.use(flash());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Global Variables
 app.use((req, res, next) => {
+    app.locals.message = req.flash('message');
     app.locals.success = req.flash('success');
+    app.locals.user = req.user;
     next();
 })
 
