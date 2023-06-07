@@ -16,6 +16,8 @@ A web application built with Node.js and MySQL that allows CRUD (Create, Read, U
 
 ## Installation
 
+video tutorial: https://www.youtube.com/watch?v=qJ5R9WTW0_E
+
 password es:    admin
 en mysqlworkbench
 
